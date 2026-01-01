@@ -1,0 +1,59 @@
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+package-lock.json
+*.log
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Runtime files
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+.idea/
+*.iml
+
+# Optional: lockfiles (keep these if you want reproducible installs)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+

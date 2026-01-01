@@ -1,0 +1,47 @@
+{
+  "name": "@feato/react-client",
+  "version": "1.0.0",
+  "description": "Feato client for React applications",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feato-app/react-client"
+  },
+  "keywords": [
+    "feature-flags",
+    "react",
+    "sse",
+    "realtime",
+    "feato"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "react": "^18.3.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  }
+}
