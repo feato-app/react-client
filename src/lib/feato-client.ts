@@ -15,6 +15,10 @@ export class FeatoClient {
   private _initialized = false;
 
   private _eventSource?: EventSource;
+  private _reconnectAttempts = 0;
+  private _reconnectTimeoutId?: number;
+  private _maxReconnectDelay = 30000; // 30 seconds
+  private _baseReconnectDelay = 1000; // 1 second
 
   get flags(): FeatureFlagsMap {
     return this._flags;
@@ -56,7 +60,7 @@ export class FeatoClient {
     };
 
     this._eventSource.onerror = () => {
-      this.disconnect();
+      this._handleConnectionError();
     };
   }
 
@@ -64,6 +68,9 @@ export class FeatoClient {
     this._flags = { ...this._flags, [event.key]: event.value ?? false };
 
     this.emitFlags();
+
+    // Reset reconnect attempts on successful message
+    this._reconnectAttempts = 0;
   }
 
   private emitFlags(): void {
@@ -100,12 +107,34 @@ export class FeatoClient {
     this._connect();
   }
 
+  private _handleConnectionError(): void {
+    this._eventSource?.close();
+    this._eventSource = undefined;
+
+    // Calculate delay with exponential backoff
+    const delay = Math.min(this._baseReconnectDelay * Math.pow(2, this._reconnectAttempts), this._maxReconnectDelay);
+
+    this._reconnectAttempts++;
+
+    console.log(`FeatoClient: Connection lost. Reconnecting in ${delay}ms (attempt ${this._reconnectAttempts})...`);
+
+    this._reconnectTimeoutId = setTimeout(() => {
+      this._connect();
+    }, delay);
+  }
+
   /**
    * Close SSE connection
    */
   disconnect(): void {
+    if (this._reconnectTimeoutId) {
+      clearTimeout(this._reconnectTimeoutId);
+      this._reconnectTimeoutId = undefined;
+    }
+
     this._eventSource?.close();
     this._eventSource = undefined;
+    this._reconnectAttempts = 0;
   }
 
   /**
