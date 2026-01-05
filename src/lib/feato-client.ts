@@ -2,7 +2,7 @@ import { FeatoClientConfig } from './types/config';
 import { FeatureFlagsMap } from './types/api';
 import { FeatureFlagEvent } from './types/events';
 
-const apiUrl = 'https://feato-hub-service-229218510057.us-central1.run.app/v1';
+const apiUrl = 'https://hub.feato.io/v1';
 
 type FlagsListener = (flags: FeatureFlagsMap) => void;
 type InitListener = (initialized: boolean) => void;
